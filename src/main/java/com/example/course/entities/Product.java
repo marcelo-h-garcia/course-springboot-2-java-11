@@ -98,7 +98,7 @@ public class Product  implements Serializable {
 	}
 	
 	@JsonIgnore
-	Set<Order> getOrders(){
+	public Set<Order> getOrders(){
 		Set<Order> set = new HashSet<>();
 		for (OrderItem x : items) {
 			set.add(x.getOrder());
@@ -126,6 +126,11 @@ public class Product  implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		return Objects.equals(id, other.id);
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }
